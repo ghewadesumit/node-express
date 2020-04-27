@@ -1,5 +1,7 @@
 const Product = require("../models/product");
 
+const db = require("../util/database");
+
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
     pageTitle: "Add Product",
@@ -58,9 +60,9 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll((products) => {
+  Product.fetchAll().then(([row, fieldData]) => {
     res.render("admin/products", {
-      prods: products,
+      prods: row,
       pageTitle: "Admin Products",
       path: "/admin/products",
     });
